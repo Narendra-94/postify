@@ -8,7 +8,7 @@ export const CreatePost = () => {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // State to track error message
+  const [errorMessage, setErrorMessage] = useState("");
   const { dispatch } = useContext(PostContext);
   const navigate = useNavigate();
 
@@ -19,8 +19,6 @@ export const CreatePost = () => {
   const handleDescriptionChange = (e) => {
     const text = e.target.value;
     setDescription(text);
-
-    // Check if the description exceeds the character limit
     if (text.length > 1000) {
       setErrorMessage("Description cannot exceed 1000 characters");
     } else {
@@ -30,15 +28,12 @@ export const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if there is an error before submitting
     if (errorMessage) {
-      return; // Do not submit if there is an error
+      return;
     }
 
     setIsSubmitting(true);
 
-    // Create the new post object
     const newPost = {
       title: title,
       body: description,
