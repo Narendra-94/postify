@@ -43,6 +43,9 @@
 .create-post {
   background: linear-gradient(to right, #a770ef, #cf8bf3, #fdb99b);
 }
+.create-post:hover {
+  background: linear-gradient(to right, #883ceb, #b85fe8, #ed9874);
+}
 
 .pagination {
   display: flex;
@@ -50,6 +53,10 @@
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.pagination button:hover {
+  background: linear-gradient(to right, #883ceb, #b85fe8, #ed9874);
 }
 
 .page-number {

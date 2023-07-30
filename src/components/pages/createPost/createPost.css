@@ -53,6 +53,10 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background: linear-gradient(to right, #883ceb, #b85fe8, #ed9874);
+}
+
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;

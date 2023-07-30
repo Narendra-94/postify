@@ -57,16 +57,18 @@ export const Posts = () => {
           alt=""
         />
         <h1>Welcome to Postify!!!</h1>
+
+        <img
+          src="https://uploads-ssl.webflow.com/64134b5d6d77584aa2835076/6413690106fcce1d6098745f_Viamagus%20Logo.svg"
+          alt=""
+        />
+
         <button
           className="create-post"
           onClick={() => navigate(`/create-post`)}
         >
           Create Post
         </button>
-        <img
-          src="https://uploads-ssl.webflow.com/64134b5d6d77584aa2835076/6413690106fcce1d6098745f_Viamagus%20Logo.svg"
-          alt=""
-        />
       </div>
 
       <hr className="line-border" />
