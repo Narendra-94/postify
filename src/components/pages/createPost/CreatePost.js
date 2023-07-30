@@ -8,6 +8,7 @@ export const CreatePost = () => {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State to track error message
   const { dispatch } = useContext(PostContext);
   const navigate = useNavigate();
 
@@ -16,11 +17,25 @@ export const CreatePost = () => {
   };
 
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    const text = e.target.value;
+    setDescription(text);
+
+    // Check if the description exceeds the character limit
+    if (text.length > 1000) {
+      setErrorMessage("Description cannot exceed 1000 characters");
+    } else {
+      setErrorMessage("");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if there is an error before submitting
+    if (errorMessage) {
+      return; // Do not submit if there is an error
+    }
+
     setIsSubmitting(true);
 
     // Create the new post object
@@ -47,7 +62,6 @@ export const CreatePost = () => {
 
       const data = await response.json();
 
-      // Dispatch the action to add the new post to the state
       dispatch({ type: "ADD_POST_SUCCESSFULLY", payload: data });
 
       setSuccessMessage("Post created successfully!");
@@ -55,10 +69,9 @@ export const CreatePost = () => {
       setDescription("");
       setIsSubmitting(false);
 
-      // Redirect to the previous post listing screen
       setTimeout(() => {
         navigate(-1);
-      }, 1500); // Redirect after 1.5 seconds
+      }, 1500);
     } catch (error) {
       console.error(error);
       setIsSubmitting(false);
@@ -66,33 +79,41 @@ export const CreatePost = () => {
   };
 
   return (
-    <div className="create-post-container">
-      <h2>Create New Post</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Title *</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={handleTitleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description (Max 1000 characters)</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-            maxLength={1000}
-          />
-        </div>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </button>
-        {successMessage && <p className="success-message">{successMessage}</p>}
-      </form>
+    <div className="create-post-card">
+      <div className="create-post-container">
+        <h2>Create New Post</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">
+              Title <span className="important">*</span>
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={handleTitleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">
+              Description (Max 1000 characters)
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={handleDescriptionChange}
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button type="submit" disabled={isSubmitting || errorMessage}>
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </button>
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

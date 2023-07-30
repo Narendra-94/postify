@@ -14,8 +14,15 @@ code {
   scroll-behavior: smooth;
 }
 
+:root {
+  --post-color: white;
+  --post-background-color: #1e1e1e;
+}
+
 html {
   height: 100%;
+  background-color: var(--post-background-color);
+  color: var(--post-color);
 }
 
 body {
