@@ -10,7 +10,9 @@ export const PostDetails = () => {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    const selectedPost = state.post.find((post) => post.id === Number(postId));
+    const selectedPost = state.allPostData.find(
+      (post) => post.id === Number(postId)
+    );
     setPost(selectedPost);
   }, [state.post, postId]);
 

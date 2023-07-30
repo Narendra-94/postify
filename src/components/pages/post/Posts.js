@@ -9,7 +9,9 @@ export const Posts = () => {
   const [isLoading, setIsLoading] = useState(true); // State to track loading
   const navigate = useNavigate();
 
-  console.log(state, "post state called");
+  const localData = JSON.parse(localStorage.getItem("allPostData"));
+
+  console.log(localData, "local");
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -30,6 +32,22 @@ export const Posts = () => {
 
     return () => clearTimeout(loadingTimeout);
   }, []);
+
+  // const {
+  //   allPostData: { length },
+  // } = state;
+
+  const lastPage = Math.ceil(
+    localData?.length % 10 === 0
+      ? localData.length / 10
+      : localData?.length / 10
+  );
+
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = startIndex + 10;
+
+  console.log(state, "console");
+  const sliceData = localData?.slice(startIndex, endIndex);
 
   return (
     <div className="post-page-container">
@@ -58,7 +76,7 @@ export const Posts = () => {
       ) : (
         <>
           <ul className="post-container">
-            {state?.post.map(({ id, title, body }) => (
+            {sliceData?.map(({ id, title, body }) => (
               <li
                 key={id}
                 className="post"
@@ -74,8 +92,13 @@ export const Posts = () => {
             <button onClick={handlePreviousPage} disabled={currentPage === 1}>
               Previous
             </button>
-            <span className="page-number">Page {currentPage} of 10</span>
-            <button onClick={handleNextPage} disabled={currentPage === 10}>
+            <span className="page-number">
+              Page {currentPage} of {lastPage}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === lastPage}
+            >
               Next
             </button>
           </div>

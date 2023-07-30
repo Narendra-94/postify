@@ -57,7 +57,8 @@ export const CreatePost = () => {
 
       const data = await response.json();
 
-      dispatch({ type: "ADD_POST_SUCCESSFULLY", payload: data });
+      // dispatch({ type: "ADD_POST_SUCCESSFULLY", payload: data });
+      dispatch({ type: "ADD_WHOLE_POST_SUCCESSFULLY", payload: data });
 
       setSuccessMessage("Post created successfully!");
       setTitle("");
@@ -68,7 +69,6 @@ export const CreatePost = () => {
         navigate(-1);
       }, 1500);
     } catch (error) {
-      console.error(error);
       setIsSubmitting(false);
     }
   };
